@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import {data} from '../data';
 import MovieCard from './MovieCard';
-import {addMovies} from '../actions/index';
+import {addMovies, showFavourite, showMovies} from '../actions/index';
 
 class App extends React.Component {
 
@@ -17,6 +17,31 @@ class App extends React.Component {
 
     store.dispatch(addMovies(data));
   }
+
+  checkFavourite = (movie) => {
+    const {favourite} = this.props.store.getState();
+
+    let index = favourite.indexOf(movie);
+
+    if(index !== -1)
+      return true;
+    
+    return false
+  }
+
+  showMovies = () => {
+    const {dispatch} = this.props.store;
+
+    dispatch(showMovies());
+  }
+
+  showFavourite = () => {
+    const {dispatch} = this.props.store;
+
+    dispatch(showFavourite());
+  }
+
+
   render(){
 
     const {store} = this.props;
@@ -24,20 +49,30 @@ class App extends React.Component {
     console.log(store.getState());
 
     const {list} = store.getState();
+    const {favourite} = store.getState();
+
+    let flag = this.state;
+
+    let movies = store.getState().flag?favourite:list;
 
     return (
       <div className="App">
         <Navbar />
         <div className="main">
           <div className="tabs">
-            <div className="tab">Movies</div>
-            <div className="tab">Favourate</div>
+            <div className="tab" onClick={this.showMovies}>Movies</div>
+            <div className="tab" onClick={this.showFavourite}>Favourate</div>
           </div>
 
           <div className="list">
-            {list.map((movie, index) => (
-              <MovieCard movie = {movie} key={`movie-${index}`}/>
+            {movies.map((movie, index) => (
+              <MovieCard 
+              movie = {movie} 
+              key={`movie-${index}`} 
+              dispatch = {store.dispatch}
+              isFavourite = {this.checkFavourite(movie)}/>
             ))}
+            {movies.length == 0?<div>No movies to display!</div>:null}
           </div>
         </div>
       </div>

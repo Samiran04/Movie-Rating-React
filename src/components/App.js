@@ -19,7 +19,8 @@ class App extends React.Component {
   }
 
   checkFavourite = (movie) => {
-    const {favourite} = this.props.store.getState();
+    const {movies} = this.props.store.getState();
+    const {favourite} = movies;
 
     let index = favourite.indexOf(movie);
 
@@ -48,12 +49,11 @@ class App extends React.Component {
 
     console.log(store.getState());
 
-    const {list} = store.getState();
-    const {favourite} = store.getState();
+    const {movies} = store.getState();
 
-    let flag = this.state;
+    const {list, favourite, flag} = movies;
 
-    let movies = store.getState().flag?favourite:list;
+    let myMovies = flag?favourite:list;
 
     return (
       <div className="App">
@@ -65,14 +65,14 @@ class App extends React.Component {
           </div>
 
           <div className="list">
-            {movies.map((movie, index) => (
+            {myMovies.map((movie, index) => (
               <MovieCard 
               movie = {movie} 
               key={`movie-${index}`} 
               dispatch = {store.dispatch}
               isFavourite = {this.checkFavourite(movie)}/>
             ))}
-            {movies.length == 0?<div>No movies to display!</div>:null}
+            {myMovies.length == 0?<div>No movies to display!</div>:null}
           </div>
         </div>
       </div>

@@ -57,7 +57,8 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Navbar />
+        <Navbar 
+        dispatch = {store.dispatch}/>
         <div className="main">
           <div className="tabs">
             <div className="tab" onClick={this.showMovies}>Movies</div>
@@ -72,7 +73,7 @@ class App extends React.Component {
               dispatch = {store.dispatch}
               isFavourite = {this.checkFavourite(movie)}/>
             ))}
-            {myMovies.length == 0?<div>No movies to display!</div>:null}
+            {myMovies.length === 0?<div>No movies to display!</div>:null}
           </div>
         </div>
       </div>

@@ -36,3 +36,13 @@ export function showFavourite() {
         type: SHOW_FAVOURITES
     }
 }
+
+export function handleMovieSearch (searchWord) {
+    const url = `http://www.omdbapi.com/?i=tt3896198&apikey=ef31a81&t=${searchWord}`;
+
+    return function(dispatch){
+            fetch(url)
+            .then(data => data.json())
+            .then(movie => { console.log(movie) })
+        }
+}

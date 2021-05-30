@@ -58,7 +58,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar 
-        dispatch = {store.dispatch}/>
+        dispatch = {store.dispatch}
+        search = {store.getState().search}/>
         <div className="main">
           <div className="tabs">
             <div className="tab" onClick={this.showMovies}>Movies</div>

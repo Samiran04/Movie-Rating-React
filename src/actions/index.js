@@ -3,6 +3,8 @@ export const ADD_FAVOURITE = 'ADD_FAVOURITE';
 export const REMOVE_FROM_FAVOURITE = 'REMOVE_FROM_FAVOURITE';
 export const SHOW_MOVIES = 'SHOW_MOVIES';
 export const SHOW_FAVOURITES = 'SHOW_FAVOURITES';
+export const ADD_MOVIE_SEARCH = 'ADD_MOVIE_SEARCH';
+export const ADD_MOVIE_SEARCH_TO_LIST = 'ADD_MOVIE_SEARCH_TO_LIST';
 
 export function addMovies(movies) {
     return {
@@ -37,12 +39,28 @@ export function showFavourite() {
     }
 }
 
+export function addMovieSearchResult(movie) {
+    return {
+        type: ADD_MOVIE_SEARCH,
+        movie: movie
+    }
+}
+
+export function addMoviesFromSeachToList(movie) {
+    return {
+        type: ADD_MOVIE_SEARCH_TO_LIST,
+        movie: movie
+    }
+}
+
 export function handleMovieSearch (searchWord) {
     const url = `http://www.omdbapi.com/?i=tt3896198&apikey=ef31a81&t=${searchWord}`;
 
     return function(dispatch){
             fetch(url)
             .then(data => data.json())
-            .then(movie => { console.log(movie) })
+            .then(movie => { console.log(movie)
+                dispatch(addMovieSearchResult(movie))
+             })
         }
 }
